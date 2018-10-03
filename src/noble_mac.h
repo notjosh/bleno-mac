@@ -4,10 +4,10 @@
 
 #include "ble_manager.h"
 
-class NobleMac : public Napi::ObjectWrap<NobleMac>
+class BlenoMac : public Napi::ObjectWrap<BlenoMac>
 {
 public:
-    NobleMac(const Napi::CallbackInfo&);
+    BlenoMac(const Napi::CallbackInfo&);
     Napi::Value Init(const Napi::CallbackInfo&);
     Napi::Value CleanUp(const Napi::CallbackInfo&);
     Napi::Value Scan(const Napi::CallbackInfo&);

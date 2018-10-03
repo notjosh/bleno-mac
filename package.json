@@ -1,11 +1,11 @@
 {
-  "name": "noble-mac",
-  "description": "Noble (Node.js Bluetooth LE) bindings using CoreBluetooth API",
+  "name": "bleno-mac",
+  "description": "Bleno (Node.js Bluetooth LE) bindings using CoreBluetooth API",
   "version": "0.0.1",
   "author": "gv@timeular.com",
   "license": "MIT",
   "repository": {
-    "url": "https://github.com/Timeular/noble-mac.git"
+    "url": "https://github.com/notjosh/bleno-mac.git"
   },
   "main": "index.js",
   "gypfile": true,
@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "napi-thread-safe-callback": "0.0.6",
-    "noble": "^1.9.1",
+    "bleno": "^0.5.0",
     "node-addon-api": "^1.1.0",
     "node-pre-gyp": "^0.10.0"
   },
@@ -32,9 +32,9 @@
     "build:test": "node-pre-gyp install --fallback-to-build=false"
   },
   "binary": {
-    "module_name": "noble_mac",
+    "module_name": "bleno_mac",
     "module_path": "./native/",
-    "host": "https://github.com/Timeular/noble-mac/releases/download/",
+    "host": "https://github.com/notjosh/bleno-mac/releases/download/",
     "remote_path": "{version}"
   }
 }

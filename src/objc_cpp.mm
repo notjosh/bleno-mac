@@ -1,33 +1,33 @@
 //
 //  objc_cpp.mm
-//  noble-mac-native
+//  bleno-mac-native
 //
 //  Created by Georg Vienna on 30.08.18.
 //
 #include "objc_cpp.h"
 
 #if defined(MAC_OS_X_VERSION_10_13)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability"
-std::string stateToString(CBManagerState state)
-{
-    switch(state) {
-        case CBManagerStatePoweredOff:
-            return "poweredOff";
-        case CBManagerStatePoweredOn:
-            return "poweredOn";
-        case CBManagerStateResetting:
-            return "resetting";
-        case CBManagerStateUnauthorized:
-            return "unauthorized";
-        case CBManagerStateUnknown:
-            return "unknown";
-        case CBManagerStateUnsupported:
-            return "unsupported";
-    }
-    return "unknown";
-}
-#pragma clang diagnostic pop
+//#pragma clang diagnostic push
+//#pragma clang diagnostic ignored "-Wunguarded-availability"
+//std::string stateToString(CBManagerState state)
+//{
+//    switch(state) {
+//        case CBManagerStatePoweredOff:
+//            return "poweredOff";
+//        case CBManagerStatePoweredOn:
+//            return "poweredOn";
+//        case CBManagerStateResetting:
+//            return "resetting";
+//        case CBManagerStateUnauthorized:
+//            return "unauthorized";
+//        case CBManagerStateUnknown:
+//            return "unknown";
+//        case CBManagerStateUnsupported:
+//            return "unsupported";
+//    }
+//    return "unknown";
+//}
+//#pragma clang diagnostic pop
 
 // In the 10.13 SDK, CBPeripheral became a subclass of CBPeer, which defines
 // -[CBPeer identifier] as partially available. Pretend it still exists on
@@ -55,6 +55,24 @@ std::string stateToString(CBCentralManagerState state)
     return "unknown";
 }
 #endif
+
+std::string StringFromCBPeripheralState(CBManagerState state) {
+    switch(state) {
+        case CBManagerStatePoweredOff:
+            return "poweredOff";
+        case CBManagerStatePoweredOn:
+            return "poweredOn";
+        case CBManagerStateUnauthorized:
+            return "unauthorized";
+        case CBManagerStateUnsupported:
+            return "unsupported";
+        case CBManagerStateResetting:
+            return "resetting";
+        case CBManagerStateUnknown:
+        default:
+            return "unknown";
+    }
+}
 
 std::string getUuid(CBPeripheral* peripheral) {
     return std::string([peripheral.identifier.UUIDString UTF8String]);

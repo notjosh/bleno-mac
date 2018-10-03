@@ -17,6 +17,7 @@
     std::string stateToString(CBCentralManagerState state);
 #endif
 
+std::string StringFromCBPeripheralState(CBManagerState state);
 
 std::string getUuid(CBPeripheral* peripheral);
 std::string getAddress(std::string uuid, AddressType* addressType);

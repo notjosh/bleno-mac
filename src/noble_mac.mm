@@ -1,10 +1,10 @@
 //
-//  noble_mac.mm
-//  noble-mac-native
+//  bleno_mac.mm
+//  bleno-mac-native
 //
 //  Created by Georg Vienna on 28.08.18.
 //
-#include "noble_mac.h"
+#include "bleno_mac.h"
 
 #include "napi_objc.h"
 
@@ -42,10 +42,10 @@ if(!manager) { \
     THROW("BLEManager has already been cleaned up"); \
 }
 
-NobleMac::NobleMac(const Napi::CallbackInfo& info) : ObjectWrap(info) {
+BlenoMac::BlenoMac(const Napi::CallbackInfo& info) : ObjectWrap(info) {
 }
 
-Napi::Value NobleMac::Init(const Napi::CallbackInfo& info) {
+Napi::Value BlenoMac::Init(const Napi::CallbackInfo& info) {
     Napi::Function emit = info.This().As<Napi::Object>().Get("emit").As<Napi::Function>();
     manager = [[BLEManager alloc] init];
     manager->emit.Wrap(info.This(), emit);
@@ -53,7 +53,7 @@ Napi::Value NobleMac::Init(const Napi::CallbackInfo& info) {
 }
 
 // startScanning(serviceUuids, allowDuplicates)
-Napi::Value NobleMac::Scan(const Napi::CallbackInfo& info) {
+Napi::Value BlenoMac::Scan(const Napi::CallbackInfo& info) {
     CHECK_MANAGER()
     NSArray* array = getUuidArray(info[0]);
     // default value NO
@@ -63,14 +63,14 @@ Napi::Value NobleMac::Scan(const Napi::CallbackInfo& info) {
 }
 
 // stopScanning()
-Napi::Value NobleMac::StopScan(const Napi::CallbackInfo& info) {
+Napi::Value BlenoMac::StopScan(const Napi::CallbackInfo& info) {
     CHECK_MANAGER()
     [manager stopScan];
     return Napi::Value();
 }
 
 // connect(deviceUuid)
-Napi::Value NobleMac::Connect(const Napi::CallbackInfo& info) {
+Napi::Value BlenoMac::Connect(const Napi::CallbackInfo& info) {
     CHECK_MANAGER()
     ARG1(String)
     auto uuid = napiToUuidString(info[0].As<Napi::String>());
@@ -79,7 +79,7 @@ Napi::Value NobleMac::Connect(const Napi::CallbackInfo& info) {
 }
 
 // disconnect(deviceUuid)
-Napi::Value NobleMac::Disconnect(const Napi::CallbackInfo& info) {
+Napi::Value BlenoMac::Disconnect(const Napi::CallbackInfo& info) {
     CHECK_MANAGER()
     ARG1(String)
     auto uuid = napiToUuidString(info[0].As<Napi::String>());
@@ -88,7 +88,7 @@ Napi::Value NobleMac::Disconnect(const Napi::CallbackInfo& info) {
 }
 
 // updateRssi(deviceUuid)
-Napi::Value NobleMac::UpdateRSSI(const Napi::CallbackInfo& info) {
+Napi::Value BlenoMac::UpdateRSSI(const Napi::CallbackInfo& info) {
     CHECK_MANAGER()
     ARG1(String)
     auto uuid = napiToUuidString(info[0].As<Napi::String>());
@@ -97,7 +97,7 @@ Napi::Value NobleMac::UpdateRSSI(const Napi::CallbackInfo& info) {
 }
 
 // discoverServices(deviceUuid, uuids)
-Napi::Value NobleMac::DiscoverServices(const Napi::CallbackInfo& info) {
+Napi::Value BlenoMac::DiscoverServices(const Napi::CallbackInfo& info) {
     CHECK_MANAGER()
     ARG1(String)
     auto uuid = napiToUuidString(info[0].As<Napi::String>());
@@ -107,7 +107,7 @@ Napi::Value NobleMac::DiscoverServices(const Napi::CallbackInfo& info) {
 }
 
 // discoverIncludedServices(deviceUuid, serviceUuid, serviceUuids)
-Napi::Value NobleMac::DiscoverIncludedServices(const Napi::CallbackInfo& info) {
+Napi::Value BlenoMac::DiscoverIncludedServices(const Napi::CallbackInfo& info) {
     CHECK_MANAGER()
     ARG2(String, String)
     auto uuid = napiToUuidString(info[0].As<Napi::String>());
@@ -118,7 +118,7 @@ Napi::Value NobleMac::DiscoverIncludedServices(const Napi::CallbackInfo& info) {
 }
 
 // discoverCharacteristics(deviceUuid, serviceUuid, characteristicUuids)
-Napi::Value NobleMac::DiscoverCharacteristics(const Napi::CallbackInfo& info) {
+Napi::Value BlenoMac::DiscoverCharacteristics(const Napi::CallbackInfo& info) {
     CHECK_MANAGER()
     ARG2(String, String)
     auto uuid = napiToUuidString(info[0].As<Napi::String>());
@@ -129,7 +129,7 @@ Napi::Value NobleMac::DiscoverCharacteristics(const Napi::CallbackInfo& info) {
 }
 
 // read(deviceUuid, serviceUuid, characteristicUuid)
-Napi::Value NobleMac::Read(const Napi::CallbackInfo& info) {
+Napi::Value BlenoMac::Read(const Napi::CallbackInfo& info) {
     CHECK_MANAGER()
     ARG3(String, String, String)
     auto uuid = napiToUuidString(info[0].As<Napi::String>());
@@ -140,7 +140,7 @@ Napi::Value NobleMac::Read(const Napi::CallbackInfo& info) {
 }
 
 // write(deviceUuid, serviceUuid, characteristicUuid, data, withoutResponse)
-Napi::Value NobleMac::Write(const Napi::CallbackInfo& info) {
+Napi::Value BlenoMac::Write(const Napi::CallbackInfo& info) {
     CHECK_MANAGER()
     ARG5(String, String, String, Buffer, Boolean)
     auto uuid = napiToUuidString(info[0].As<Napi::String>());
@@ -153,7 +153,7 @@ Napi::Value NobleMac::Write(const Napi::CallbackInfo& info) {
 }
 
 // notify(deviceUuid, serviceUuid, characteristicUuid, notify)
-Napi::Value NobleMac::Notify(const Napi::CallbackInfo& info) {
+Napi::Value BlenoMac::Notify(const Napi::CallbackInfo& info) {
     CHECK_MANAGER()
     ARG4(String, String, String, Boolean)
     auto uuid = napiToUuidString(info[0].As<Napi::String>());
@@ -165,7 +165,7 @@ Napi::Value NobleMac::Notify(const Napi::CallbackInfo& info) {
 }
 
 // discoverDescriptors(deviceUuid, serviceUuid, characteristicUuid)
-Napi::Value NobleMac::DiscoverDescriptors(const Napi::CallbackInfo& info) {
+Napi::Value BlenoMac::DiscoverDescriptors(const Napi::CallbackInfo& info) {
     CHECK_MANAGER()
     ARG3(String, String, String)
     auto uuid = napiToUuidString(info[0].As<Napi::String>());
@@ -176,7 +176,7 @@ Napi::Value NobleMac::DiscoverDescriptors(const Napi::CallbackInfo& info) {
 }
 
 // readValue(deviceUuid, serviceUuid, characteristicUuid, descriptorUuid)
-Napi::Value NobleMac::ReadValue(const Napi::CallbackInfo& info) {
+Napi::Value BlenoMac::ReadValue(const Napi::CallbackInfo& info) {
     CHECK_MANAGER()
     ARG4(String, String, String, String)
     auto uuid = napiToUuidString(info[0].As<Napi::String>());
@@ -188,7 +188,7 @@ Napi::Value NobleMac::ReadValue(const Napi::CallbackInfo& info) {
 }
 
 // writeValue(deviceUuid, serviceUuid, characteristicUuid, descriptorUuid, data)
-Napi::Value NobleMac::WriteValue(const Napi::CallbackInfo& info) {
+Napi::Value BlenoMac::WriteValue(const Napi::CallbackInfo& info) {
     CHECK_MANAGER()
     ARG5(String, String, String, String, Buffer)
     auto uuid = napiToUuidString(info[0].As<Napi::String>());
@@ -201,7 +201,7 @@ Napi::Value NobleMac::WriteValue(const Napi::CallbackInfo& info) {
 }
 
 // readHandle(deviceUuid, handle)
-Napi::Value NobleMac::ReadHandle(const Napi::CallbackInfo& info) {
+Napi::Value BlenoMac::ReadHandle(const Napi::CallbackInfo& info) {
     CHECK_MANAGER()
     ARG2(String, Number)
     auto uuid = napiToUuidString(info[0].As<Napi::String>());
@@ -211,7 +211,7 @@ Napi::Value NobleMac::ReadHandle(const Napi::CallbackInfo& info) {
 }
 
 // writeHandle(deviceUuid, handle, data, (unused)withoutResponse)
-Napi::Value NobleMac::WriteHandle(const Napi::CallbackInfo& info) {
+Napi::Value BlenoMac::WriteHandle(const Napi::CallbackInfo& info) {
     CHECK_MANAGER()
     ARG3(String, Number, Buffer)
     auto uuid = napiToUuidString(info[0].As<Napi::String>());
@@ -221,39 +221,39 @@ Napi::Value NobleMac::WriteHandle(const Napi::CallbackInfo& info) {
     return Napi::Value();
 }
 
-Napi::Value NobleMac::CleanUp(const Napi::CallbackInfo& info) {
+Napi::Value BlenoMac::CleanUp(const Napi::CallbackInfo& info) {
     CHECK_MANAGER()
     CFRelease((__bridge CFTypeRef)manager);
     manager = nil;
     return Napi::Value();
 }
 
-Napi::Function NobleMac::GetClass(Napi::Env env) {
-    return DefineClass(env, "NobleMac", {
-        NobleMac::InstanceMethod("init", &NobleMac::Init),
-        NobleMac::InstanceMethod("startScanning", &NobleMac::Scan),
-        NobleMac::InstanceMethod("stopScanning", &NobleMac::StopScan),
-        NobleMac::InstanceMethod("connect", &NobleMac::Connect),
-        NobleMac::InstanceMethod("disconnect", &NobleMac::Disconnect),
-        NobleMac::InstanceMethod("updateRssi", &NobleMac::UpdateRSSI),
-        NobleMac::InstanceMethod("discoverServices", &NobleMac::DiscoverServices),
-        NobleMac::InstanceMethod("discoverIncludedServices", &NobleMac::DiscoverIncludedServices),
-        NobleMac::InstanceMethod("discoverCharacteristics", &NobleMac::DiscoverCharacteristics),
-        NobleMac::InstanceMethod("read", &NobleMac::Read),
-        NobleMac::InstanceMethod("write", &NobleMac::Write),
-        NobleMac::InstanceMethod("notify", &NobleMac::Notify),
-        NobleMac::InstanceMethod("discoverDescriptors", &NobleMac::DiscoverDescriptors),
-        NobleMac::InstanceMethod("readValue", &NobleMac::ReadValue),
-        NobleMac::InstanceMethod("writeValue", &NobleMac::WriteValue),
-        NobleMac::InstanceMethod("readHandle", &NobleMac::ReadValue),
-        NobleMac::InstanceMethod("writeHandle", &NobleMac::WriteValue),
-        NobleMac::InstanceMethod("cleanUp", &NobleMac::CleanUp),
+Napi::Function BlenoMac::GetClass(Napi::Env env) {
+    return DefineClass(env, "BlenoMac", {
+        BlenoMac::InstanceMethod("init", &BlenoMac::Init),
+        BlenoMac::InstanceMethod("startScanning", &BlenoMac::Scan),
+        BlenoMac::InstanceMethod("stopScanning", &BlenoMac::StopScan),
+        BlenoMac::InstanceMethod("connect", &BlenoMac::Connect),
+        BlenoMac::InstanceMethod("disconnect", &BlenoMac::Disconnect),
+        BlenoMac::InstanceMethod("updateRssi", &BlenoMac::UpdateRSSI),
+        BlenoMac::InstanceMethod("discoverServices", &BlenoMac::DiscoverServices),
+        BlenoMac::InstanceMethod("discoverIncludedServices", &BlenoMac::DiscoverIncludedServices),
+        BlenoMac::InstanceMethod("discoverCharacteristics", &BlenoMac::DiscoverCharacteristics),
+        BlenoMac::InstanceMethod("read", &BlenoMac::Read),
+        BlenoMac::InstanceMethod("write", &BlenoMac::Write),
+        BlenoMac::InstanceMethod("notify", &BlenoMac::Notify),
+        BlenoMac::InstanceMethod("discoverDescriptors", &BlenoMac::DiscoverDescriptors),
+        BlenoMac::InstanceMethod("readValue", &BlenoMac::ReadValue),
+        BlenoMac::InstanceMethod("writeValue", &BlenoMac::WriteValue),
+        BlenoMac::InstanceMethod("readHandle", &BlenoMac::ReadValue),
+        BlenoMac::InstanceMethod("writeHandle", &BlenoMac::WriteValue),
+        BlenoMac::InstanceMethod("cleanUp", &BlenoMac::CleanUp),
     });
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
-    Napi::String name = Napi::String::New(env, "NobleMac");
-    exports.Set(name, NobleMac::GetClass(env));
+    Napi::String name = Napi::String::New(env, "BlenoMac");
+    exports.Set(name, BlenoMac::GetClass(env));
     return exports;
 }
 

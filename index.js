@@ -2,12 +2,12 @@
 
 const os = require('os');
 
-// noble-mac acts as a shim to noble.
+// bleno-mac acts as a shim to bleno.
 if (os.platform() === 'darwin') {
-	const Noble = require('noble/lib/noble');
+	const Bleno = require('bleno/lib/bleno');
 	const macBindings = require('./lib/binding.js');
-	var nobleInstance = new Noble(macBindings);
-	module.exports = nobleInstance;
+	var blenoInstance = new Bleno(macBindings);
+	module.exports = blenoInstance;
 } else {
-	module.exports = require('noble');
+	module.exports = require('bleno');
 }
