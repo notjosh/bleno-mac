@@ -263,3 +263,24 @@ BOOL getBool(const Napi::Value& value, BOOL def) {
     }
     return def;
 }
+
+NSArray* napiToCBUuidArray(Napi::Array array) {
+    NSMutableArray* serviceUuids = [NSMutableArray arrayWithCapacity:array.Length()];
+    for(size_t i = 0;  i < array.Length(); i++) {
+        Napi::Value val = array[i];
+        [serviceUuids addObject:napiToCBUuidString(val.As<Napi::String>())];
+    }
+    return serviceUuids;
+}
+
+CBUUID* napiToCBUuidString(Napi::String string) {
+    NSString* uuidString = napiToUuidString(string);
+    return [CBUUID UUIDWithString:uuidString];
+}
+
+NSArray* getCBUuidArray(const Napi::Value& value) {
+    if (value.IsArray()) {
+        return napiToCBUuidArray(value.As<Napi::Array>());
+    }
+    return nil;
+}

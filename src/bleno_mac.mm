@@ -69,7 +69,7 @@ Napi::Value BlenoMac::StartAdvertising(const Napi::CallbackInfo& info) {
     ARG2(String, Array);
 
     auto name = napiToString(info[0].As<Napi::String>());
-    NSArray *array = getUuidArray(info[1]);
+    NSArray *array = getCBUuidArray(info[1]);
 
     [peripheralManager startAdvertising:name
                            serviceUUIDs:array];

@@ -6,7 +6,10 @@
 #include <map>
 
 NSArray* getUuidArray(const Napi::Value& value);
+NSArray* getCBUuidArray(const Napi::Value& value);
 BOOL getBool(const Napi::Value& value, BOOL def);
+NSArray* napiToCBUuidArray(Napi::Array array);
+CBUUID* napiToCBUuidString(Napi::String string);
 NSArray<CBMutableService *> *napiArrayToCBMutableServices(Napi::Array array);
 CBMutableService *napiToCBMutableService(Napi::Object obj);
 NSArray<CBMutableCharacteristic *> *napiArrayToCBMutableCharacteristics(Napi::Array array);
