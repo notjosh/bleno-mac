@@ -24,13 +24,16 @@
         NSLog(@"-[BLEPeripheralManager init]");
 
         self.queue = dispatch_queue_create("CBqueue", 0);
-        self.peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self
-                                                                         queue:self.queue];
     }
     return self;
 }
 
 #pragma mark - API
+
+- (void)start {
+    self.peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self
+                                                                    queue:self.queue];
+}
 
 - (void)startAdvertising:(nonnull NSString *)name serviceUUIDs:(nonnull NSArray<CBUUID *> *)serviceUUIDs {
     NSLog(@"startAdvertising:%@ serviceUUIDs:%@", name, serviceUUIDs);

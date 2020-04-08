@@ -9,8 +9,8 @@
   },
   "main": "index.js",
   "gypfile": true,
-	"engines": {
-		"node": ">=6.14.2"
+  "engines": {
+    "node": ">=6.14.2"
   },
   "os": [
     "darwin"
