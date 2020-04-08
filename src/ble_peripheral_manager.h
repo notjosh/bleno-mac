@@ -20,6 +20,7 @@
 
 - (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
 
+- (void)start;
 - (void)startAdvertising:(nonnull NSString *)name serviceUUIDs:(nonnull NSArray<CBUUID *> *)serviceUUIDs;
 - (void)startAdvertisingIBeacon:(NSData *)data;
 - (void)startAdvertisingWithEIRData:(NSData *)data;

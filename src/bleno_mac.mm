@@ -51,6 +51,7 @@ Napi::Value BlenoMac::Init(const Napi::CallbackInfo& info) {
     Napi::Function emit = info.This().As<Napi::Object>().Get("emit").As<Napi::Function>();
     peripheralManager = [BLEPeripheralManager new];
     peripheralManager->emit.Wrap(info.This(), emit);
+    [peripheralManager start];
     return Napi::Value();
 }
 
